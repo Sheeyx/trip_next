@@ -1,0 +1,555 @@
+#pc-wrap {
+	#my-page {
+		#my-profile-page {
+			width: 100%;
+			height: auto;
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+			.main-title-box {
+				width: auto;
+				height: auto;
+				flex-direction: row;
+				justify-content: space-between;
+				.right-box {
+					width: 315px;
+					.main-title {
+						color: #181a20;
+						font-family: $font;
+						font-size: 30px;
+						font-style: normal;
+						font-weight: 600;
+						line-height: normal;
+						letter-spacing: 0.6px;
+						text-transform: capitalize;
+					}
+					.sub-title {
+						color: #181a20;
+						font-family: $font;
+						font-size: 14px;
+						font-style: normal;
+						font-weight: 400;
+						line-height: 26px;
+					}
+				}
+			}
+			.property-card {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				padding: 40px;
+				height: 600px;
+				overflow-y: scroll;
+				.profile-property{
+					border-radius: 6px;
+					width: 250px;
+					height: 250px;
+					margin-top: 20px;
+					cursor: pointer;
+					position: relative;
+					.inner-card {
+						display: none;
+					}
+					
+					&:hover {
+						.inner-card {
+							display: block;
+							top: 0;
+							left: 0;
+							width: 100%;
+							height: 100%;
+							position: absolute;
+							padding: 6px;
+							border-radius: 6px;
+							color: #fff;
+							background-color: rgba($color: #000000, $alpha: 0.3);
+							
+							p {
+								position: absolute;
+								padding: 6px;
+								text-align: center;
+								border-radius: 20px;
+								bottom: 10px;
+								left: 10px;
+								background-color: rgba($color: #7d057f, $alpha: 0.7);
+							}
+						}
+
+						span {
+							font-size: 16px;
+							font-weight: 600;
+							margin-left: 10px;
+						}
+						.like {
+							position: absolute;
+							top: 40%;
+							left: 30%;
+							display: flex;
+							flex-direction: row;
+							align-items: center;
+						}
+						.views{
+							position: absolute;
+							top: 40%;
+							left: 55%;
+							display: flex;
+							flex-direction: row;
+							align-items: center;
+						}
+					}
+					
+					img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+						border-radius: 6px;
+					}
+				}
+			}
+			
+			.top-box {
+				width: 100%;
+				padding: 30px;
+				margin-top: 35px;
+				gap: 25px;
+				border-radius: 12px;
+				border: 1px solid #c4c4c4;
+				background: #fff;
+				box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+				.upper-box {
+					display: flex;
+					flex-direction: row;
+					.profile-photo {
+						overflow: hidden;
+						width: 150px;
+						height: 150px;
+						border-radius: 50%;
+						position: relative;
+					
+						img {
+							width: 100%;
+							height: 100%;
+							border-radius: 50%;
+							object-fit: cover;
+							cursor: pointer;
+							transition: transform 0.7s ease;
+							&:hover {
+								transform: scale(1.1);
+							}
+						}
+					}
+					.title {
+						font-size: 16px;
+						font-weight: 600;
+						margin-left: 60px;
+						cursor: pointer;
+					}
+					.info-links {
+						display: flex;
+						flex-direction: row;
+						margin: 20px 0 0 60px;
+
+								.properties, .followers, .following {
+									&:hover {
+										color: rgb(254, 54, 54);
+										cursor: pointer;
+									}
+								}
+								
+								a {
+									display: flex;
+									flex-direction: column;
+									align-items: center;
+									margin: 0 30px;
+									&:first-child {
+										margin-left: 0;
+									}
+									.num {
+										margin-bottom: 10px;
+									}
+									p {
+										font-weight: 500;
+									}
+								}
+					}
+					.member-info {
+						margin: 10px 0 0 60px;
+						.member-phone {
+							display: flex;
+							align-items: center;
+							color: #717171;
+							svg {
+								width: 15px;
+								margin-right: 5px;
+							}
+						}
+						.member-type {
+							font-size: 18px;
+							font-weight: 600;
+							color: rgb(249, 22, 22);
+						}
+					}
+				}
+				
+				.photo-box {
+					gap: 23px;
+					.title {
+						color: #181a20;
+						font-family: $font;
+						font-size: 17px;
+						font-style: normal;
+						font-weight: 600;
+						line-height: normal;
+					}
+					.image-big-box {
+						flex-direction: row;
+						gap: 50px;
+						.image-box {
+							position: relative;
+							width: 194px;
+							height: 157px;
+							img {
+								width: 100%;
+								height: 100%;
+								object-fit: cover;
+								border-radius: 15px;
+								object-fit: cover;
+							}
+							.delete-box {
+								position: absolute;
+								top: 10px;
+								left: 10px;
+								width: 36px;
+								height: 32px;
+								background-color: #ffffff;
+								align-items: center;
+								justify-content: center;
+								border-radius: 12px;
+							}
+						}
+						.upload-big-box {
+							align-self: flex-end;
+							gap: 22px;
+
+							.info {
+								display: flex;
+								flex-direction: row;
+								.properties, .followers, .following {
+									&:hover {
+										color: rgb(254, 54, 54);
+										cursor: pointer;
+									}
+								}
+								
+								a {
+									display: flex;
+									flex-direction: column;
+									align-items: center;
+									margin: 0 30px;
+									&:first-child {
+										margin-left: 0;
+									}
+									.num {
+										margin-bottom: 10px;
+									}
+									p {
+										font-weight: 500;
+									}
+								}
+								
+							}
+							.labeler {
+								display: flex;
+								height: 40.135px;
+								justify-content: start;
+								align-items: center;
+								border: none;
+								cursor: pointer;
+								p {
+									color: #555964;
+									font-family: $font;
+									font-size: 13px;
+									font-style: normal;
+									font-weight: 600;
+									line-height: normal;
+									&:hover {
+										color: rgb(254, 54, 54);
+									}
+								}
+							}
+							.upload-text {
+								color: #181a20;
+								font-family: $font;
+								font-size: 12px;
+								font-style: normal;
+								font-weight: 400;
+								line-height: 26px;
+							}
+						}
+					}
+				}
+				.small-input-box {
+					width: 100%;
+					height: auto;
+					flex-direction: row;
+					flex-wrap: wrap;
+					gap: 30px;
+					.input-box {
+						width: 48%;
+						gap: 10px;
+						position: relative;
+						.title {
+							color: #181a20;
+							font-family: $font;
+							font-size: 12px;
+							font-style: normal;
+							font-weight: 600;
+							line-height: normal;
+						}
+						input {
+							color: rgb(71, 70, 70);
+							font-size: 0.9rem;
+							background-color: transparent;
+							width: 100%;
+							box-sizing: border-box;
+							padding-inline: 0.5em;
+							padding-block: 0.7em;
+							border: none;
+							border-bottom: 1px solid rgba(221, 221, 221, 0.39);
+							border-bottom: 1px solid rgba(157, 157, 157, 0.39);
+							::placeholder {
+								color: #717171;
+								font-family: $font;
+								font-size: 12px;
+								font-style: normal;
+								font-weight: 400;
+								line-height: 26px;
+							}
+
+							&:hover {
+								background: #b0c8ec1f;
+							   }
+							   
+							   &:focus {
+								outline: none;
+							   }
+							   /* here is code of animated border */
+							   &:focus ~ .input-border {
+								width: 100%;
+							   }
+						}
+						.input-border {
+							position: absolute;
+							background: rgb(254, 54, 54);
+							width: 0%;
+							height: 2px;
+							bottom: 0;
+							left: 0;
+							transition: 0.7s;
+						}
+					}
+				}
+				.address-box {
+					gap: 10px;
+					position: relative;
+					.title {
+						color: #181a20;
+						font-family: $font;
+						font-size: 12px;
+						font-style: normal;
+						font-weight: 600;
+						line-height: normal;
+					}
+					input {
+						color: rgb(71, 70, 70);
+						font-size: 0.9rem;
+						background-color: transparent;
+						width: 100%;
+						box-sizing: border-box;
+						padding-inline: 0.5em;
+						padding-block: 0.7em;
+						border: none;
+						border-bottom: 1px solid rgba(221, 221, 221, 0.39);
+						border-bottom: 1px solid rgba(157, 157, 157, 0.39);
+						::placeholder {
+							color: #717171;
+							font-family: $font;
+							font-size: 12px;
+							font-style: normal;
+							font-weight: 400;
+							line-height: 26px;
+						}
+
+						&:hover {
+							background: #b0c8ec1f;
+						   }
+						   
+						   &:focus {
+							outline: none;
+						   }
+						   /* here is code of animated border */
+						   &:focus ~ .input-border {
+							width: 100%;
+							color: rgb(254, 54, 54);
+						   }
+					}
+					.input-border {
+						position: absolute;
+						background: rgb(254, 54, 54);
+						width: 0%;
+						height: 2px;
+						bottom: 0;
+						left: 0;
+						transition: 0.7s;
+					}
+				}
+				.about-me-box {
+					gap: 10px;
+					.title {
+						color: #181a20;
+						font-family: $font;
+						font-size: 12px;
+						font-style: normal;
+						font-weight: 600;
+						line-height: normal;
+					}
+					.about-textarea {
+						height: 170px;
+						padding: 20px 15px;
+						border-radius: 8px;
+						border: 1px solid #ddd;
+						color: #717171;
+						font-family: $font;
+						font-size: 12px;
+						font-style: normal;
+						font-weight: 400;
+						line-height: 26px;
+					}
+					.update-button {
+						display: flex;
+						width: 170px;
+						height: 38px;
+						justify-content: center;
+						align-items: center;
+						gap: 10px;
+						align-self: flex-end;
+						margin-top: 30px;
+						border-radius: 12px;
+						background-color: #000000;
+						p {
+							color: #fff;
+							font-family: $font;
+							font-size: 13px;
+							font-style: normal;
+							font-weight: 600;
+							line-height: normal;
+						}
+					}
+					button:disabled {
+						background: #181a2045;
+					}
+				}
+			}
+			.bottom-box {
+				width: 100%;
+				padding: 30px;
+				gap: 25px;
+				border-radius: 12px;
+				border: 1px solid #c4c4c4;
+				background: #fff;
+				box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+				.top-inner-box {
+					gap: 20px;
+					.title {
+						color: #181a20;
+						font-family: $font;
+						font-size: 15px;
+						font-style: normal;
+						font-weight: 600;
+						line-height: normal;
+					}
+					.old-password-box {
+						gap: 10px;
+						.title {
+							color: #181a20;
+							font-family: $font;
+							font-size: 12px;
+							font-style: normal;
+							font-weight: 600;
+							line-height: normal;
+						}
+						input {
+							width: 50%;
+							height: 55px;
+							outline: none;
+							padding: 0px 15px;
+							border-radius: 8px;
+							border: 1px solid #ddd;
+							::placeholder {
+								color: #717171;
+								font-family: $font;
+								font-size: 12px;
+								font-style: normal;
+								font-weight: 400;
+								line-height: 26px;
+							}
+						}
+					}
+				}
+				.bottom-inner-box {
+					width: 100%;
+					flex-direction: row;
+					gap: 45px;
+					.new-password-box {
+						width: 100%;
+						gap: 10px;
+						.title {
+							color: #181a20;
+							font-family: $font;
+							font-size: 12px;
+							font-style: normal;
+							font-weight: 600;
+							line-height: normal;
+						}
+						input {
+							height: 55px;
+							outline: none;
+							padding: 0px 15px;
+							border-radius: 8px;
+							border: 1px solid #ddd;
+							::placeholder {
+								color: #717171;
+								font-family: $font;
+								font-size: 12px;
+								font-style: normal;
+								font-weight: 400;
+								line-height: 26px;
+							}
+						}
+					}
+				}
+				.change-password {
+					display: flex;
+					width: 170px;
+					height: 38px;
+					justify-content: center;
+					align-items: center;
+					gap: 10px;
+					align-self: flex-end;
+					margin-top: 18px;
+					border-radius: 12px;
+					background-color: #000000;
+					p {
+						color: #fff;
+						font-family: $font;
+						font-size: 13px;
+						font-style: normal;
+						font-weight: 600;
+						line-height: normal;
+					}
+				}
+			}
+		}
+	}
+}

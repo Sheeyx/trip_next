@@ -1,0 +1,25 @@
+.typing-text {
+  font-family: 'Courier New', Courier, monospace;
+  white-space: nowrap;
+  border-right: 4px solid #fff; /* White cursor to match the text */
+  animation: blink 0.75s step-end infinite;
+  font-size: 32px; /* Large font size for a title */
+  color: #ffffff; /* Bright white color for the title */
+  font-weight: 800; /* Extra bold weight for prominence */
+  letter-spacing: 4px; /* Spacing between letters for dramatic effect */
+  text-transform: uppercase; /* Uppercase for a title effect */
+  margin: 30px 0; /* Margin to space the title from other elements */
+  display: inline-block; /* Makes the title more contained */
+  
+  /* Enhanced multi-layered text-shadow for more depth and a glowing effect */
+  text-shadow: 
+    2px 2px 5px rgba(0, 0, 0, 0.6),   /* Darker shadow for depth */
+    4px 4px 10px rgba(255, 111, 0, 0.4),  /* Larger shadow for more impact */
+    0px 0px 15px rgba(255, 255, 255, 0.8); /* A white glow around the text */
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
