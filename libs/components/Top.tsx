@@ -18,7 +18,6 @@ import { userVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
 import { REACT_APP_API_URL } from '../config';
 import NotificationCard from './common/Notification';
-import { GET_WAIT_NOTIFICATION_COUNT } from '../../apollo/user/query';
 
 const Top = () => {
 	const device = useDeviceDetect();
@@ -185,7 +184,7 @@ const Top = () => {
 								<div style={{ color: router.pathname === "/" ? "#3a71fe" : "#000" }}>{t('Home')}</div>
 							</Link>
 							<Link href={'/stays'}>
-								<div style={{ color: router.pathname === "/stays" ? "#3a71fe" : "#000" }}>{t('Properties')}</div>
+								<div style={{ color: router.pathname === "/stays" ? "#3a71fe" : "#000" }}>{t('Stays')}</div>
 							</Link>
 							{user?._id && (
 								<Link href={'/orders'}>

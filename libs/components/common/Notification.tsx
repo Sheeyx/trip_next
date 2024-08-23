@@ -12,9 +12,8 @@ const NotificationCard = ({ notice, setWaitData }: any) => {
   const user = useReactiveVar(userVar);
   const [notification, setNotification] = useState<any[]>([]);
 
-  // Query to fetch notifications
 
-  const { loading, data, error, refetch } = useQuery(GET_NOTIFICATION, {
+  const { loading, data, refetch } = useQuery(GET_NOTIFICATION, {
     fetchPolicy: 'network-only',
     variables: { notificationId: user?._id },
     notifyOnNetworkStatusChange: true,
@@ -24,7 +23,7 @@ const NotificationCard = ({ notice, setWaitData }: any) => {
   });
 
 
-  const { loading: waitLoading, data: waitData, error: waitError, refetch: refetchWaitCount } = useQuery(GET_WAIT_NOTIFICATION_COUNT, {
+  const { loading: waitLoading, data: waitData, refetch: refetchWaitCount } = useQuery(GET_WAIT_NOTIFICATION_COUNT, {
     variables: { notificationId: user?._id },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
@@ -40,9 +39,6 @@ const NotificationCard = ({ notice, setWaitData }: any) => {
       await refetch(); // Refetch the query to get updated data
       await refetchWaitCount();
     },
-    onError: (error) => {
-      console.error('Error updating notification:', error);
-    },
   });
 
   const handleSubmit = async (id: string) => {
@@ -56,8 +52,7 @@ const NotificationCard = ({ notice, setWaitData }: any) => {
         },
       });
     } catch (err) {
-      console.error('Error in handleSubmit:', err);
-      alert('Error updating notification');
+      console.log('Error in handleSubmit:', err);
     }
   };
 
@@ -67,7 +62,6 @@ const NotificationCard = ({ notice, setWaitData }: any) => {
     return (
       <div className={`notification-card ${notice ? 'show' : 'hide'}`}>
         <h2>Notifications</h2>
-        {error && <p>Error loading notifications!</p>}
         {notification.length === 0 && <p>No notifications available.</p>}
         {[...notification]
           .sort((a, b) => {
