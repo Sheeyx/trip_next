@@ -2,7 +2,7 @@ import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import { Stack, Box, Button, Pagination } from '@mui/material';
+import { Stack, Box, Button, Pagination, Typography } from '@mui/material';
 import { Menu, MenuItem } from '@mui/material';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import AgentCard from '../../libs/components/common/AgentCard';
@@ -15,6 +15,7 @@ import { T } from '../../libs/types/common';
 import { LIKE_TARGET_MEMBER } from '../../apollo/user/mutation';
 import { Message } from '../../libs/enums/common.enum';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import withLayoutFull from '../../libs/components/layout/LayoutFull';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -127,6 +128,38 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 	} else {
 		return (
 			<Stack className={'agent-list-page'}>
+				<Stack
+					className='agent-list-main'
+					style={{
+						backgroundImage: 'url(/img/banner/agent.jpg)',
+						width: "100%",
+						backgroundSize: 'cover', // Ensures the image covers the entire area
+						backgroundPosition: 'center', // Centers the image
+						height: "80vh"
+					}}
+					>
+						<Stack className="text-content">
+        <Typography variant="h2" component="h1" gutterBottom>
+          Meet Our Agents
+        </Typography>
+        <Typography variant="body1">
+          - Our team of dedicated real estate professionals.
+        </Typography>
+        <Typography variant="body1">
+          - They are always here to help you find your dream home.
+        </Typography>
+        <Typography variant="body1">
+          - With years of experience and deep knowledge of the local market,
+        </Typography>
+        <Typography variant="body1">
+          - We're committed to making your buying or selling experience seamless and stress-free.
+        </Typography>
+      </Stack>
+      <Stack className="image-content">
+        <img src="/img/banner/investment-property.jpg" alt="Investment Property" />
+        <img src="/img/banner/property.jpg" alt="Property" />
+      </Stack>			
+				</Stack>
 				<Stack className={'container'}>
 					<Stack className={'filter'}>
 						<Box component={'div'} className={'left'}>
@@ -217,4 +250,4 @@ AgentList.defaultProps = {
 	},
 };
 
-export default withLayoutBasic(AgentList);
+export default withLayoutFull(AgentList);
