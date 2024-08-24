@@ -142,7 +142,7 @@ const withAdminLayout = (Component: ComponentType) => {
 					>
 						<Toolbar sx={{ flexDirection: 'column', alignItems: 'flexStart' }}>
 							<Stack className={'logo-box'}>
-								<img src={'/img/logo/logoText.svg'} alt={'logo'} />
+								<img src={'/img/logo/olchaa.png'} style={{ width: '120px' }} alt={'logo'} />
 							</Stack>
 
 							<Stack
@@ -168,7 +168,7 @@ const withAdminLayout = (Component: ComponentType) => {
 
 						<Divider />
 
-						{/* <MenuList /> */}
+						<MenuList />
 					</Drawer>
 
 					<Box component={'div'} id="bunker" sx={{ flexGrow: 1 }}>

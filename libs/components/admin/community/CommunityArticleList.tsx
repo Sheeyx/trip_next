@@ -186,7 +186,7 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 									<TableCell align="center">{article?.articleViews}</TableCell>
 									<TableCell align="center">{article?.articleLikes}</TableCell>
 									<TableCell align="left">
-										{/* <Moment format={'DD.MM.YY HH:mm'}>{article?.createdAt}</Moment> */}
+										<Moment format={'DD.MM.YY HH:mm'}>{article?.createdAt}</Moment>
 									</TableCell>
 									<TableCell align="center">
 										{article.articleStatus === BoardArticleStatus.DELETE ? (
