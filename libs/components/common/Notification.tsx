@@ -12,35 +12,45 @@ const NotificationCard = ({ notice, setWaitData }: any) => {
   const user = useReactiveVar(userVar);
   const [notification, setNotification] = useState<any[]>([]);
 
-
-  const { loading, data, refetch } = useQuery(GET_NOTIFICATION, {
+  // Query to get notifications
+  const { loading, data, refetch, error } = useQuery(GET_NOTIFICATION, {
     fetchPolicy: 'network-only',
     variables: { notificationId: user?._id },
     notifyOnNetworkStatusChange: true,
     onCompleted: (data: T) => {
       setNotification(data?.getNotification || []);
     },
+    onError: (err) => {
+      console.error('Error fetching notifications:', err);
+    }
   });
 
-
-  const { loading: waitLoading, data: waitData, refetch: refetchWaitCount } = useQuery(GET_WAIT_NOTIFICATION_COUNT, {
+  // Query to get waiting notification count
+  const { loading: waitLoading, data: waitData, refetch: refetchWaitCount, error: waitError } = useQuery(GET_WAIT_NOTIFICATION_COUNT, {
     variables: { notificationId: user?._id },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
     onCompleted: (data: T) => {
-      setWaitData(waitData);
+      setWaitData(data?.getWaitNotificationCount);
     },
+    onError: (err) => {
+      console.error('Error fetching waiting notifications:', err);
+    }
   });
-    
+
   // Mutation to update notification status
   const [updateNotification] = useMutation(UPDATE_NOTIFICATION, {
     onCompleted: async () => {
       console.log('Mutation completed successfully');
-      await refetch(); // Refetch the query to get updated data
-      await refetchWaitCount();
+      await refetch(); // Refetch the notification query to get updated data
+      await refetchWaitCount(); // Refetch the wait count query
     },
+    onError: (err) => {
+      console.error('Error updating notification status:', err);
+    }
   });
 
+  // Handle notification read
   const handleSubmit = async (id: string) => {
     try {
       await updateNotification({
@@ -52,18 +62,26 @@ const NotificationCard = ({ notice, setWaitData }: any) => {
         },
       });
     } catch (err) {
-      console.log('Error in handleSubmit:', err);
+      console.error('Error in handleSubmit:', err);
     }
   };
 
+  // Mobile View: Show a simple message for now
   if (device === 'mobile') {
     return <div>Notification CARD</div>;
-  } else {
-    return (
-      <div className={`notification-card ${notice ? 'show' : 'hide'}`}>
-        <h2>Notifications</h2>
-        {notification.length === 0 && <p>No notifications available.</p>}
-        {[...notification]
+  }
+
+  // Desktop View: Display notification card
+  if (!notice || loading || waitLoading || error || waitError) {
+    return null; // No data or loading state, render nothing
+  }
+
+  // Only render notifications if there is data
+  return (
+    <div className={`notification-card ${notice ? 'show' : 'hide'}`}>
+      <h2>Notifications</h2>
+      {notification.length > 0 ? (
+        [...notification]
           .sort((a, b) => {
             // Sort by notification status first
             if (a.notificationStatus === 'WAIT' && b.notificationStatus !== 'WAIT') return -1;
@@ -73,7 +91,7 @@ const NotificationCard = ({ notice, setWaitData }: any) => {
             // If statuses are the same, sort by updatedAt in descending order
             return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
           })
-          .map(value => (
+          .map((value) => (
             <div
               key={value._id}
               className={`card ${value.notificationStatus === 'READ' ? 'read' : 'unread'}`}
@@ -82,14 +100,16 @@ const NotificationCard = ({ notice, setWaitData }: any) => {
               {value.notificationStatus === 'WAIT' && <div className="dot"></div>}
               <p className="title">{value.notificationTitle}</p>
               <div className="info">
-                <img src={`${REACT_APP_API_URL}/${value?.memberData?.memberImage}`} alt="" />
+                <img src={`${REACT_APP_API_URL}/${value?.memberData?.memberImage}`} alt="Notification Member" />
                 <p>{value.notificationDesc}</p>
               </div>
             </div>
-          ))}
-      </div>
-    );
-  }
+          ))
+      ) : (
+        <p className='notification-available'>No notifications available.</p>
+      )}
+    </div>
+  );
 };
 
 export default NotificationCard;
