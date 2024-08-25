@@ -18,7 +18,6 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
-	console.log(property);
 	
 	/** HANDLERS **/
 

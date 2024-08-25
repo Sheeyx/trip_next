@@ -38,9 +38,6 @@ const TopAgents = (props: TopAgentsProps) => {
 	});
 	/** HANDLERS **/
 
-	console.log(getAgentsData);
-	
-
 	if (device === 'mobile') {
 		return (
 			<Stack className={'top-agents'}>
