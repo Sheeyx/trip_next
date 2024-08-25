@@ -6,6 +6,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		
 		.agent-list-main {
 			display: flex;
 			justify-content: space-between;
@@ -14,7 +15,8 @@
 			position: relative;
 			flex-direction: row;
 			overflow: hidden;
-		  
+			margin-bottom: 60px;
+
 			// Add a pseudo-element to create the background shadow
 			&::before {
 			  content: '';
@@ -33,7 +35,7 @@
 			  color: white;
 			  animation: fadeInText 1s ease-in-out forwards;
 			  animation-delay: 0s;
-		  
+			  		  
 			  h2, p {
 				font-size: 18px;
 				opacity: 0;

@@ -28,8 +28,8 @@ const Orders: NextPage = ({ initialInput, ...props }: T) => {
     <div className="orders-page container">
       <div className='orders-layout'>
         <div className='orders-title'>
-          <h1>Beautiful Title</h1>
-          <p>Hello World</p>
+          <h1>Your Travel Orders</h1>
+          <p>Keep track of all your upcoming trips and past adventures.</p>
         </div>
         <div className='orders-photo'>
           <img className='image-left' src='https://static.india.com/wp-content/uploads/2023/10/Top-9-Largest-Hotels-In-The-World-2023.png' alt='Description' />
