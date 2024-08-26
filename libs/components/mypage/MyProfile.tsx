@@ -11,62 +11,34 @@ import { MemberUpdate } from '../../types/member/member.update';
 import { UPDATE_MEMBER } from '../../../apollo/user/mutation';
 import { sweetErrorHandling, sweetMixinSuccessAlert } from '../../sweetAlert';
 import { GET_AGENT_PROPERTIES, GET_MEMBER_FOLLOWERS, GET_MEMBER_FOLLOWINGS } from '../../../apollo/user/query';
-import { Follower } from '../../types/follow/follow';
+import { Follower, Following } from '../../types/follow/follow';
 import { T } from '../../types/common';
 import Link from 'next/link';
 import PropertyCard from '../common/PropertyCards';
 import { Property } from '../../types/property/property';
 import { AgentPropertiesInquiry } from '../../types/property/property.input';
 import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { useRouter } from 'next/router';
+import { FollowInquiry } from '../../types/follow/follow.input';
 
-const MyProfile: NextPage = ({ initialInput, initialValues, ...props }: any) => {
+
+const MyProfile: NextPage = ({ initialInputs, initialFollowerInput, initialInput, initialValues, ...props }: any) => {
 	const device = useDeviceDetect();
 	const token = getJwtToken();
 	const user = useReactiveVar(userVar);
 	const [updateData, setUpdateData] = useState<MemberUpdate>(initialValues);
-	const [memberFollowers, setMemberFollowers] = useState<Follower[]>([]);
-	const [total, setTotal] = useState<number>(0);
-	const [followingTotal, setTotalFollowing] = useState<number>(0);
 	const [agentProperties, setAgentProperties] = useState<Property[]>([]);
 	const [searchFilter, setSearchFilter] = useState<AgentPropertiesInquiry>(initialInput);
-
-
-
-	console.log(agentProperties,"agentProperties");
-	
-	console.log(user);
+	const [total, setTotal] = useState<number>(0);
+	const [followInquiry, setFollowInquiry] = useState<FollowInquiry>(initialInputs);
+	const [totalFollowings, setTotalFollowings] = useState<number>(0);
+	const [followerInquiry, setFollowerInquiry] = useState<FollowInquiry>(initialFollowerInput);
+	const [totalFollower, setTotalFollower] = useState<number>(0);
+	const router = useRouter();
 	
 	/** APOLLO REQUESTS **/
 	const [updateMember] = useMutation(UPDATE_MEMBER);
-	
-
-	const {
-		loading: gerMemberFollowersLoading,
-		data: gerMemberFollowersData,
-		error: gerMemberFollowersError,
-		refetch: gerMemberFollowersRefetch,
-	} = useQuery(GET_MEMBER_FOLLOWERS, {
-		fetchPolicy: 'network-only', 
-		notifyOnNetworkStatusChange: true,
-		onCompleted: (data: T) => {
-			setMemberFollowers(data?.getMemberFollowers?.list);
-			setTotal(data?.getMemberFollowers?.metaCounter[0]?.total);
-		},
-	});
-
-	const {
-		loading: getMemberFollowingsLoading,
-		data: getMemberFollowingsData,
-		error: getMemberFollowingsError,
-		refetch: getMemberFollowingsRefetch,
-	} = useQuery(GET_MEMBER_FOLLOWINGS, {
-		fetchPolicy: 'network-only', // by default cache-first
-		notifyOnNetworkStatusChange: true,
-		onCompleted: (data: T) => {
-			setTotalFollowing(data?.getMemberFollowings?.metaCounter[0]?.total);
-		},
-	});
-
 	
 	const {
 		loading: getAgentPropertiesLoading,
@@ -82,7 +54,38 @@ const MyProfile: NextPage = ({ initialInput, initialValues, ...props }: any) => 
 			setTotal(data?.getAgentProperties?.metaCounter[0]?.total ?? 0);
 		},
 	});
-	
+
+	const {
+		loading: getMemberFollowingsLoading,
+		data: getMemberFollowingsData,
+		error: getMemberFollowingsError,
+		refetch: getMemberFollowingsRefetch,
+	} = useQuery(GET_MEMBER_FOLLOWINGS, {
+		fetchPolicy: 'network-only', // by default cache-first
+		variables: { input: followInquiry },
+		skip: !followInquiry?.search?.followerId,
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setTotalFollowings(data?.getMemberFollowings?.metaCounter[0]?.total);
+		},
+	});
+
+	const {
+		loading: getMemberFollowersLoading,
+		data: getMemberFollowersData,
+		error: getMemberFollowersError,
+		refetch: getMemberFollowersRefetch,
+	} = useQuery(GET_MEMBER_FOLLOWERS, {
+		fetchPolicy: 'network-only',
+		variables: { input: followerInquiry },
+		skip: !followerInquiry?.search?.followingId,
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setTotalFollower(data?.getMemberFollowers?.metaCounter[0]?.total);
+		},
+	});
+
+
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -95,6 +98,23 @@ const MyProfile: NextPage = ({ initialInput, initialValues, ...props }: any) => 
 			memberProperties: user.memberProperties,
 		});
 	}, [user]);
+
+	useEffect(() => {
+		if (router.query.memberId)
+			setFollowInquiry({ ...followInquiry, search: { followerId: router.query.memberId as string } });
+		else setFollowInquiry({ ...followInquiry, search: { followerId: user?._id } });
+	}, []);
+
+	useEffect(() => {
+		if (router.query.memberId)
+		setFollowerInquiry({ ...followerInquiry, search: { followingId: router.query.memberId as string } });
+		else setFollowerInquiry({ ...followerInquiry, search: { followingId: user?._id } });
+	}, []);
+
+
+	const handleSettingsClick = () => {
+	  router.push('/mypage?category=mySettings');
+	};
 
 	/** HANDLERS **/
 	const uploadImage = async (e: any) => {
@@ -202,58 +222,47 @@ const MyProfile: NextPage = ({ initialInput, initialValues, ...props }: any) => 
 							<Typography className="title">{updateData?.memberNick}</Typography>
 						<Stack>
 						<Stack>
-						<Stack className='info-links'>
-									<Link className='properties' href={{
-												pathname: '/mypage',
-												query: { category: 'myProperties' },
-											}}
-											scroll={false}>
-										<p className='num'>{user?.memberProperties}</p>
-										<p>Properties</p>
-									</Link>
-									<Link className='followers' href={{
-										pathname: '/mypage',
-										query: { category: 'followers' },
-									}}
-									scroll={false}>
-										<p className='num'>{total}</p>
-										<p>Followers</p>
-									</Link>
-									<Link className='following' href={{
-										pathname: '/mypage',
-										query: { category: 'followings' },
-									}}
-									scroll={false}>
-										<p className='num'>{followingTotal}</p>
-										<p>Following</p>
-									</Link>
-						</Stack>
-						<Stack className='member-info'>
-							<Typography> {user?.memberFullName}</Typography>
-							<Typography className='member-phone'><PhoneInTalkIcon/> {user?.memberPhone}</Typography>
-							<Typography className='member-type'> {user?.memberType}</Typography>
+							<Stack className='info-links'>
+										<Link className='properties' href={{
+													pathname: '/mypage',
+													query: { category: 'myProperties' },
+												}}
+												scroll={false}>
+											<p className='num'>{total}</p>
+											<p>Properties</p>
+										</Link>
+										<Link className='followers' href={{
+											pathname: '/mypage',
+											query: { category: 'followers' },
+										}}
+										scroll={false}>
+											<p className='num'>{totalFollower}</p>
+											<p>Followers</p>
+										</Link>
+										<Link className='following' href={{
+											pathname: '/mypage',
+											query: { category: 'followings' },
+										}}
+										scroll={false}>
+											<p className='num'>{totalFollowings}</p>
+											<p>Following</p>
+										</Link>
+							</Stack>
+							<Stack className='member-info'>
+								<Typography> {user?.memberFullName}</Typography>
+								<Typography className='member-phone'><PhoneInTalkIcon/> {user?.memberPhone}</Typography>
+								<Typography className='member-type'> {user?.memberType}</Typography>
+							</Stack>
 						</Stack>
 						
-						</Stack>
 					</Stack>
 						
+					</Stack>
+					<Stack>
+						<SettingsIcon sx={{color: "#3a71fe", cursor: "pointer"}} onClick = {handleSettingsClick} />
 					</Stack>
 					</Stack>
 					<Stack className='property-card'>
-						{
-							agentProperties?.map((value,index)=>{
-								return (
-									<PropertyCard property={value}/>	
-								)
-							})
-						}
-						{
-							agentProperties?.map((value,index)=>{
-								return (
-									<PropertyCard property={value}/>	
-								)
-							})
-						}
 						{
 							agentProperties?.map((value,index)=>{
 								return (
@@ -285,6 +294,24 @@ MyProfile.defaultProps = {
 			propertyStatus: 'ACTIVE',
 		},
 	},
+
+	initialInputs: {
+		page: 1,
+		limit: 5,
+		search: {
+			followerId: '',
+		},
+	},
+
+	initialFollowerInput: {
+		page: 1,
+		limit: 5,
+		search: {
+			followingId: '',
+		},
+	},
+	
 };
+
 
 export default MyProfile;
