@@ -66,7 +66,6 @@ const MySettings: NextPage = ({ initialValues, ...props }: any) => {
 			memberPhone: user.memberPhone,
 			memberAddress: user.memberAddress,
 			memberImage: user.memberImage,
-			memberProperties: user.memberProperties,
 		});
 	}, [user]);
 
@@ -183,7 +182,7 @@ const MySettings: NextPage = ({ initialValues, ...props }: any) => {
 											}}
 											scroll={false}>
 										<p className='num'>{user?.memberProperties}</p>
-										<p>Properties</p>
+										<p>Properties</p>	
 									</Link>
 									<Link className='followers' href={{
 										pathname: '/mypage',
