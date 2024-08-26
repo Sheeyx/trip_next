@@ -59,8 +59,8 @@
             line-height: normal;
             letter-spacing: 0.42px;
             &.active {
-              border: 1px solid #725CE8;
-              background: #EB6753;
+              border: 1px solid #938181;
+              background: rgba($color: #292626, $alpha: 0.7);
               color: #FFF;
             }
           }
@@ -183,8 +183,8 @@
               letter-spacing: -0.225px;
               cursor: pointer;
               &.active {
-                border-bottom: 1px solid #EB6753;
-                color: #EB6753;
+                border-bottom: 1px solid #464646;
+                color: #040404;
               }
             }
           }

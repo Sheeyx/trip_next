@@ -19,7 +19,7 @@ const WriteArticle: NextPage = () => {
 						<Typography className="sub-title">Feel free to write your ideas!</Typography>
 					</Stack>
 				</Stack>
-				{/* <TuiEditor /> */}
+				<TuiEditor />
 			</div>
 		);
 };
