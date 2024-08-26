@@ -31,7 +31,7 @@ const NotificationCard = ({ notice, setWaitData }: any) => {
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
     onCompleted: (data: T) => {
-      setWaitData(data?.getWaitNotificationCount);
+      setWaitData(data?.getWaitNotificationCount);      
     },
     onError: (err) => {
       console.error('Error fetching waiting notifications:', err);
