@@ -236,7 +236,7 @@ const MyProfile: NextPage = ({ initialInputs, initialFollowerInput, initialInput
 											query: { category: 'followers' },
 										}}
 										scroll={false}>
-											<p className='num'>{totalFollower}</p>
+											<p className='num'>{totalFollower ? totalFollower : 0}</p>
 											<p>Followers</p>
 										</Link>
 										<Link className='following' href={{
@@ -244,7 +244,7 @@ const MyProfile: NextPage = ({ initialInputs, initialFollowerInput, initialInput
 											query: { category: 'followings' },
 										}}
 										scroll={false}>
-											<p className='num'>{totalFollowings}</p>
+											<p className='num'>{totalFollowings ? totalFollowings : 0}</p>
 											<p>Following</p>
 										</Link>
 							</Stack>
