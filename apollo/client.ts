@@ -35,6 +35,7 @@ class LoggingWebSocket {
 		this.socket = new WebSocket(`${url}?token=${getJwtToken()}`);
 		socketVar(this.socket);
 
+
 		this.socket.onopen = () => {
 			console.log('WebSocket connection!');
 		};
@@ -139,7 +140,7 @@ import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 // No Subscription required for develop process
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:3007/graphql",
+  uri: "http://localhost:9009/graphql",
 });
 
 const client = new ApolloClient({
