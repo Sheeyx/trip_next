@@ -145,7 +145,7 @@ const Chat = () => {
 							<Box flexDirection={'row'} style={{ display: 'flex' }} sx={{ m: '10px 0px' }} component={'div'}>
 								<div className={'welcome'}>Welcome to Live chat!</div>
 							</Box>
-							{messagesList.map((ele: MessagePayload) => {
+							{messagesList.map((ele: MessagePayload, index: number) => {
 								const { text, memberData } = ele;
 								const memberImages = memberData?.memberImage
 									? `${REACT_APP_API_URL}/${memberData.memberImage}`
@@ -153,6 +153,7 @@ const Chat = () => {
 
 								return memberData?._id === user?._id ? (
 									<Box
+										key={index}
 										component={'div'}
 										flexDirection={'row'}
 										style={{ display: 'flex' }}
@@ -163,7 +164,7 @@ const Chat = () => {
 										<div className={'msg-right'}>{text}</div>
 									</Box>
 								) : (
-									<Box flexDirection={'row'} style={{ display: 'flex' }} sx={{ m: '10px 0px' }} component={'div'}>
+									<Box key={index} flexDirection={'row'} style={{ display: 'flex' }} sx={{ m: '10px 0px' }} component={'div'}>
 										<Avatar alt={'jonik'} src={memberImages} />
 										
 										<div className={'msg-left'}>{text}</div>

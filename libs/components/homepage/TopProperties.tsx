@@ -95,9 +95,9 @@ const TopProperties = (props: TopPropertiesProps) => {
 							spaceBetween={15}
 							modules={[Autoplay]}
 						>
-							{topProperties.map((property: Property) => {
+							{topProperties.map((property: Property, index: number) => {
 								return (
-									<SwiperSlide className={'top-property-slide'} key={property?._id}>
+									<SwiperSlide className={'top-property-slide'} key={property?._id || index}>
 										<TopPropertyCard property={property} />
 									</SwiperSlide>
 								);
@@ -138,9 +138,9 @@ const TopProperties = (props: TopPropertiesProps) => {
 								el: '.swiper-top-pagination',
 							}}
 						>
-							{properties.map((property: any) => {
+							{properties.map((property: any, index:number) => {
 								return (
-									<SwiperSlide className={'top-property-slide'} key={property?._id}>
+									<SwiperSlide className={'top-property-slide'} key={property?._id || index}>
 										<TopPropertyCard property={property} />
 									</SwiperSlide>
 								);
