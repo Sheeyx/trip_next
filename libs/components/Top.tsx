@@ -250,8 +250,9 @@ const Top = () => {
 								onClick = {()=>{setNotice(!notice)}}
 								/>}
 								{user?._id && <NotificationCard notice = {notice} setWaitData = {setWaitData}/>}
-
-								<div className = {`dot-hide ${waitData != 0 ? 'dot-icon' : ''}`}>{waitData}</div> 
+								<div className={`dot-hide ${waitData > 0 ? 'dot-icon' : ''}`}>
+									{waitData > 0 ? waitData : null}
+								</div>
 
 								<Button
 									disableRipple
